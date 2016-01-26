@@ -7,7 +7,9 @@
 <% if @surveys.any? %>
   <ul class="nav nav-pills nav-stacked">
     <% @surveys.each() do |survey| %>
-      <li><%= survey.title() %></li>
+      <li>
+        <a href="/surveys/<%= survey.id() %>"><%= survey.title() %></a>
+      </li>
     <% end %>
   </ul>
 <% end %>

@@ -15,3 +15,15 @@ feature "add a survey path" do
     expect(page).to(have_content('New Survey'))
   end
 end
+
+feature "add a question path" do
+  scenario "adds a question to a survey" do
+    test_survey = create_test_survey
+    visit('/')
+    click_link('Test Survey')
+    fill_in('question', :with => 'Test question?')
+    click_button('Create Question')
+    expect(page).to(have_content('Test question?'))
+    expect(page).to(have_content('Manage Survey'))
+  end
+end
