@@ -32,6 +32,11 @@
         <button class="btn btn-default" type="submit" name="_method" value="patch">Update</button>
       </div>
     </form>
+    <form class="" action="/questions/<%= @question.id %>" method="post">
+      <div class="form-group">
+        <button class="btn btn-danger" type="submit" name="_method" value="delete">Delete Question</button>
+      </div>
+    </form>
   </div>
 </div>
 
@@ -39,7 +44,13 @@
 <h5>Possible responses include:</h5>
   <ul>
     <% @responses.each do |response| %>
-      <li><%= response.response %></li>
+      <li>
+        <form action="/responses/<%= response.id %>" method="post">
+          <label for="_method"><%= response.response %></label>
+          <button class="btn btn-xs btn-danger" type="submit" name="_method" value="delete">x</button>
+        </form>
+
+      </li>
     <% end %>
   </ul>
 <% end %>

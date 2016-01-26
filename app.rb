@@ -69,3 +69,18 @@ patch '/questions/:id' do
 
   redirect "/questions/#{question.id}"
 end
+
+delete '/questions/:id' do
+  question = Question.find(params[:id])
+  survey_id = question.survey.id
+  question.destroy
+
+  redirect("/surveys/#{survey_id}")
+end
+
+delete '/responses/:response_id' do
+  response = Response.find(params[:response_id])
+  question_id = response.question.id
+  response.destroy
+  redirect "/questions/#{question_id}"
+end

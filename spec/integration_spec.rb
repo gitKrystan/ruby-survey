@@ -76,3 +76,22 @@ feature "update a survey", :js => true  do
     expect(page).to(have_content('Altogether new response'))
   end
 end
+
+feature "delete" do
+  scenario "allows a user to delete a survey" do
+    test_survey = create_test_survey
+    test_question = create_test_question(test_survey.id)
+    test_response = create_test_response(test_question.id)
+    visit('/')
+    click_link('Test Survey')
+    click_link(test_question.question)
+    click_button('expand-question-edit')
+    click_button('x')
+    expect(page).to(have_content('Is this a test question?'))
+    expect(page).not_to(have_content('test response'))
+    click_button('expand-question-edit')
+    click_button('Delete Question')
+    expect(page).to(have_content('Test Survey'))
+    expect(page).not_to(have_content('Is this a test question?'))
+  end
+end
