@@ -52,7 +52,7 @@ feature "add a question path", :js => true do
   end
 end
 
-feature "update a survey" do
+feature "update a survey", :js => true  do
   scenario "allows a user to update a survey" do
     test_survey = create_test_survey
     test_question = create_test_question(test_survey.id)
@@ -68,8 +68,11 @@ feature "update a survey" do
     click_button('expand-question-edit')
     fill_in('question', :with => 'New question text?')
     fill_in(test_response.id, :with => 'New answer text')
+    click_button('+')
+    fill_in('response1', :with => 'Altogether new response')
     click_button('Update')
     expect(page).to(have_content('New question text?'))
     expect(page).to(have_content('New answer text'))
+    expect(page).to(have_content('Altogether new response'))
   end
 end

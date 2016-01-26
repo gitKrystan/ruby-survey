@@ -56,10 +56,15 @@ end
 patch '/questions/:id' do
   question = Question.find(params[:id])
   question.update(question: params[:question])
-  responses = question.responses
+  existing_responses = question.responses
 
-  responses.each() do |response|
+  existing_responses.each() do |response|
     response.update(response: params["#{response.id}".to_sym])
+  end
+
+  params[:response_count].to_i.times do |count|
+    response_number = "response" << (count + 1).to_s
+    question.responses.create(response: params[response_number.to_sym])
   end
 
   redirect "/questions/#{question.id}"

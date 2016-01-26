@@ -10,14 +10,24 @@
         <label for="question">Edit Title</label>
         <input class="form-control" type="text" name="question" value="<%= @question.question %>">
       </div>
-      <% if @responses.any? %>
-        <label for="">Edit Responses</label>
-        <% @responses.each do |response| %>
-          <div class="form-group">
-            <input class="form-control" type="text" name="<%= response.id %>" value="<%= response.response %>">
-          </div>
+      <div id="responses">
+        <input hidden id="response_count" name="response_count" value="1">
+        <% if @responses.any? %>
+          <label for="">Edit Responses</label>
+          <% @responses.each do |response| %>
+            <div class="form-group">
+              <input class="form-control" type="text" name="<%= response.id %>" value="<%= response.response %>">
+            </div>
+          <% end %>
         <% end %>
-      <% end %>
+
+
+      </div>
+
+      <div class="form-group">
+        <button class="btn btn-default" type="button" id="add-response">+</button>
+      </div>
+
       <div class="form-group">
         <button class="btn btn-default" type="submit" name="_method" value="patch">Update</button>
       </div>
