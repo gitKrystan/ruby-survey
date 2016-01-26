@@ -1,0 +1,10 @@
+<h2>Question: <%= @question.question %></h2>
+
+<% if @responses.any? %>
+<h5>Possible responses include:</h5>
+  <ul>
+    <% @responses.each do |response| %>
+      <li><%= response.response %></li>
+    <% end %>
+  </ul>
+<% end %>
