@@ -1,3 +1,10 @@
 class Survey < ActiveRecord::Base
-  has_many(:questions)
+  has_many(:questions, dependent: :destroy)
+  before_save(:capitalize)
+
+private
+
+  def capitalize
+    self.title = title.split(" ").each { |w| w.capitalize! }.join(" ")
+  end
 end

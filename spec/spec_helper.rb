@@ -12,11 +12,23 @@ RSpec.configure do |config|
     Survey.all().each() do |survey|
       survey.destroy()
     end
-    Question.all().each() do |question|
-      question.destroy()
-    end
-    Response.all().each() do |response|
-      response.destroy()
-    end
   end
+end
+
+def create_test_survey
+  Survey.create(title: "test survey")
+end
+
+def create_test_question(survey_id)
+  Question.create({
+    question: "Is this a test question?",
+    survey_id: survey_id
+    })
+end
+
+def create_test_response(question_id)
+  Response.create({
+    response: "test response",
+    question_id: question_id
+    })
 end
