@@ -52,3 +52,15 @@ get '/questions/:id' do
   @responses = @question.responses
   erb :question
 end
+
+patch '/questions/:id' do
+  question = Question.find(params[:id])
+  question.update(question: params[:question])
+  responses = question.responses
+
+  responses.each() do |response|
+    response.update(response: params["#{response.id}".to_sym])
+  end
+
+  redirect "/questions/#{question.id}"
+end

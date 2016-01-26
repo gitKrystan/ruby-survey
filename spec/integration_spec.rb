@@ -33,22 +33,22 @@ feature "add a survey path" do
   end
 end
 
-feature "add a question path" do
+feature "add a question path", :js => true do
   scenario "adds a question to a survey" do
     test_survey = create_test_survey
     visit('/')
     click_link('Test Survey')
     fill_in('question', :with => 'Test question?')
     fill_in('response1', :with => 'test response 1')
-    # page.execute_script("$('#add_response').mousedown()")
-    # fill_in('response2', :with => 'test response 2')
+    click_button('+')
+    fill_in('response2', :with => 'test response 2')
     click_button('Create Question')
     expect(page).to(have_content('Test question?'))
     expect(page).to(have_content('Manage Survey'))
     click_link('Test question?')
     expect(page).to(have_content('Test question?'))
     expect(page).to(have_content('test response 1'))
-    # expect(page).to(have_content('test response 2'))
+    expect(page).to(have_content('test response 2'))
   end
 end
 
@@ -64,5 +64,12 @@ feature "update a survey" do
     click_button('Update')
     expect(page).to(have_content('New Survey Name'))
     expect(page).to(have_content('Manage Survey'))
+    click_link(test_question.question)
+    click_button('expand-question-edit')
+    fill_in('question', :with => 'New question text?')
+    fill_in(test_response.id, :with => 'New answer text')
+    click_button('Update')
+    expect(page).to(have_content('New question text?'))
+    expect(page).to(have_content('New answer text'))
   end
 end
