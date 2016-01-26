@@ -1,0 +1,13 @@
+<form class="form-inline" action="/surveys" method="post">
+  <label for="title">New Survey</label>
+  <input class="form-control" type="text" name="title" placeholder="Title">
+  <button class="btn btn-primary" type="submit">Create Survey</button>
+</form>
+
+<% if @surveys.any? %>
+  <ul>
+    <% @surveys.each() do |survey| %>
+      <li><%= survey.title() %></li>
+    <% end %>
+  </ul>
+<% end %>

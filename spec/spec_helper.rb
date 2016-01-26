@@ -2,10 +2,11 @@ ENV['RACK_ENV'] = 'test'
 require 'rspec'
 require 'pg'
 require 'sinatra/activerecord'
-require 'capybara'
+require 'capybara/rspec'
 require 'survey'
 require 'question'
 require 'response'
+require "./app"
 
 RSpec.configure do |config|
   config.after(:each) do
