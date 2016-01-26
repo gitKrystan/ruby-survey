@@ -10,5 +10,8 @@ feature "add a survey path" do
     click_button('Create Survey')
     expect(page).to(have_content('Test Survey'))
     expect(page).to(have_content('Manage Survey'))
+    click_link('Survey Donkey')
+    expect(page).to(have_content('Test Survey'))
+    expect(page).to(have_content('New Survey'))
   end
 end

@@ -5,7 +5,7 @@
 </form>
 
 <% if @surveys.any? %>
-  <ul>
+  <ul class="nav nav-pills nav-stacked">
     <% @surveys.each() do |survey| %>
       <li><%= survey.title() %></li>
     <% end %>
