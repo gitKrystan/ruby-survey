@@ -6,12 +6,17 @@
 </h1>
 <div class="collapse" id="collapseExample">
   <div class="well">
-    <form class="" action="/surveys/<%= @survey.id %>" method="post">
+    <form action="/surveys/<%= @survey.id %>" method="post">
       <div class="form-group col-xs-4">
         <input class="form-control" type="text" name="title" value="<%= @survey.title %>">
       </div>
       <div class="form-group">
         <button class="btn btn-default" type="submit" name="_method" value="patch">Update</button>
+      </div>
+    </form>
+    <form action="/surveys/<%= @survey.id %>" method="post">
+      <div class="form-group">
+        <button class="btn btn-danger" type="submit" name="_method" value="delete">Delete Survey</button>
       </div>
     </form>
   </div>
@@ -20,7 +25,7 @@
 <form action="/surveys/<%= @survey.id %>/questions" method="post">
   <div class="form-group">
     <label for="question">New Question</label>
-    <textarea class="form-control" name="question" rows="4" placeholder="Title"></textarea>
+    <textarea class="form-control" name="question" rows="4" placeholder="Question"></textarea>
   </div>
   <div id="responses">
     <input hidden id="response_count" name="response_count" value="1">
@@ -36,6 +41,21 @@
     <button class="btn btn-primary" type="submit">Create Question</button>
   </div>
 </form>
+
+<div class="form-group">
+  <a href="/surveys/<%= @survey.id %>/questionnaire">
+    <button class="btn btn-primary">Create Questionnaire</button>
+  </a>
+</div>
+
+<!-- TODO: Refactor this so that logic isn't sitting in the erb -->
+<% if @survey.questions.any? && @survey.questions.first.responses.first.counter != 0 %>
+  <div class="form-group">
+    <a href="/surveys/<%= @survey.id %>/results">
+      <button class="btn btn-primary">Get Results</button>
+    </a>
+  </div>
+<% end %>
 
 <% if @questions.any? %>
   <ul>

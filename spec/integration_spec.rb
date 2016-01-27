@@ -93,5 +93,23 @@ feature "delete" do
     click_button('Delete Question')
     expect(page).to(have_content('Test Survey'))
     expect(page).not_to(have_content('Is this a test question?'))
+    click_button('expand-title-edit')
+    click_button('Delete Survey')
+    expect(page).to(have_content('New Survey'))
+    expect(page).not_to(have_content('Test Survey'))
+  end
+end
+
+feature "create questionnaire" do
+  scenario "allows a user to generate a questionnaire" do
+    test_survey = create_test_survey
+    test_question = create_test_question(test_survey.id)
+    test_response = create_test_response(test_question.id)
+    visit('/')
+    click_link('Test Survey')
+    click_link('Create Questionnaire')
+    expect(page).to(have_content(test_survey.title))
+    expect(page).to(have_content(test_question.question))
+    expect(page).to(have_content(test_response.response))
   end
 end

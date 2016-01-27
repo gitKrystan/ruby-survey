@@ -1,0 +1,23 @@
+<h1><%= @survey.title %></h1>
+
+<% if @questions.any? %>
+  <form action="/surveys/<%= @survey.id %>/responses" method="post">
+    <% @questions.each do |question| %>
+      <div class="form-group">
+        <label for="<%= question.id %>"><%= question.question %></label>
+        <div class="radio">
+          <% question.responses.each do |response| %>
+            <label>
+              <input required type="radio" name="<%= question.id %>" value="<%= response.id %>">
+              <%= response.response %>
+            </label>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+
+    <button class="btn btn-success" type="submit">Submit</button>
+  </form>
+<% else %>
+  <h4>Please add questions!</h4>
+<% end %>

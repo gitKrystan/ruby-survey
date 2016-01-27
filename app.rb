@@ -35,6 +35,18 @@ patch '/surveys/:id' do
   redirect "/surveys/#{@survey.id}"
 end
 
+delete '/surveys/:id' do
+  survey = Survey.find(params[:id])
+  survey.destroy
+  redirect "/"
+end
+
+get '/surveys/:id/questionnaire' do
+  @survey = Survey.find(params[:id])
+  @questions = @survey.questions
+  erb :questionnaire
+end
+
 post '/surveys/:id/questions' do
   survey = Survey.find(params[:id])
   question = survey.questions.create(question: params[:question])
@@ -45,6 +57,32 @@ post '/surveys/:id/questions' do
   end
 
   redirect("/surveys/#{survey.id}")
+end
+
+post '/surveys/:id/responses' do
+  survey = Survey.find(params[:id])
+  questions = survey.questions
+
+  questions.each do |question|
+    choice_id = params["#{question.id}".to_sym]
+    choice = Response.find(choice_id)
+    choice_counter = choice.counter + 1
+    choice.update(counter: choice_counter)
+  end
+
+  redirect "/surveys/#{survey.id}/results"
+end
+
+get '/surveys/:id/results' do
+  @survey = Survey.find(params[:id])
+  @questions = @survey.questions
+
+  @total_responses = 0
+  @questions.first.responses.each do |response|
+    @total_responses += response.counter
+  end
+
+  erb :results
 end
 
 get '/questions/:id' do
